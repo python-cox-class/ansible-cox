@@ -1,0 +1,23 @@
+auto lo
+iface lo inet loopback
+
+
+
+auto bond0.200
+iface bond0.200 inet static
+        address 192.168.100.4
+        netmask 255.255.255.0
+        vlan_raw_device bond0
+auto bond0.300
+iface bond0.300 inet static
+        address 10.0.1.4
+        netmask 255.255.255.0
+        vlan_raw_device bond0
+
+auto br0
+iface br0 inet dhcp
+    bridge-ifaces enp0s3
+    bridge-ports enp0s3
+    up ifconfig enp0s3 up
+
+iface enp0s3 inet manual

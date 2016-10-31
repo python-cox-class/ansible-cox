@@ -1,0 +1,86 @@
+- hosts: all
+  remote_user: python
+  become: yes
+  tasks:
+  # Let the sudo group use sudo without a password
+  - lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"
+
+# Set up the 'stack' user
+- hosts: all
+  remote_user: python
+  become: yes
+  tasks:
+  - name: create root .ssh
+    file: path=/root/.ssh state=directory owner=root group=root mode=0700
+  - name: install root authorized_keys
+    copy: src=../id_rsa.pub dest=/root/.ssh/authorized_keys owner=root group=root mode=0600
+  - name: create stack user
+    user:
+        name: stack
+        groups: sudo
+        # Password is "stack"
+        password: $6$rounds=656000$0g80czCDrQIzFFv0$4kiRcoYHEgh01smc0lSontihFSyTPxaULzLLZ8q3nJBm8wM43ceUxlIMB/rrnN3E8mGtidRpSdWsCcQ8xmIn40
+  - name: create stack .ssh
+    file: path=/home/stack/.ssh state=directory owner=stack group=stack mode=0700
+  - name: install stack authorized_keys
+    copy: src=../id_rsa.pub dest=/home/stack/.ssh/authorized_keys owner=stack group=stack mode=0600
+
+# Now bootstrap the "deployment host"
+- hosts: all
+  remote_user: stack
+  tasks:
+  - name: install openstack-ansible dependencies
+    become: yes
+    apt: name={{item}} state=installed
+    with_items:
+      - aptitude
+      - build-essential
+      - git
+      - ntp
+      - ntpdate
+      - openssh-server
+      - python-dev
+      - sudo
+  - name: create /opt directory
+    become: yes
+    file: path=/opt state=directory owner=stack group=stack mode=0755
+  - name: upgrade pip
+    become: yes
+    command: pip install --upgrade pip
+  - name: checkout openstack-ansible
+    remote_user: stack
+    git: repo=https://github.com/openstack/openstack-ansible
+        dest=/opt/openstack-ansible
+        version=14.0.0
+  - name: run boostrap script
+    become: yes
+    command: scripts/bootstrap-ansible.sh chdir=/opt/openstack-ansible creates=/opt/ansible-runtime
+
+# Now bootstrap the "target host"
+
+- hosts: all
+  remote_user: stack
+  tasks:
+  - name: install dependencies
+    become: yes
+    apt: name={{item}} state=installed
+    with_items:
+      - bridge-utils
+      - debootstrap
+      - ifenslave
+      - ifenslave-2.6
+      - lsof
+      - lvm2
+      - ntp
+      - ntpdate
+      - openssh-server
+      - sudo
+      - tcpdump
+      - vlan
+  - name: load modules
+    become: yes
+    lineinfile: dest=/etc/modules state=present line='{{item}}'
+    with_items: [bonding 8021q]
+  - name: reboot VM
+    become: yes
+    command: shutdown -r +1

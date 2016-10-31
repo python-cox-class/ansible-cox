@@ -1,0 +1,12 @@
+- hosts: all
+  remote_user: stack
+  become: yes
+  tasks:
+  - name: install bond0 vlan
+    command: vconfig add bond0 {{item}}
+    with_items:
+      - 100
+      - 200
+      - 300
+  - name: configure network interfaces
+    copy: src=files/network_interfaces.j2 dest=/etc/network/interfaces

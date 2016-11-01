@@ -2,11 +2,11 @@
   remote_user: stack
   become: yes
   tasks:
-  - name: install bond0 vlan
-    command: vconfig add bond0 {{item}}
-    with_items:
-      - 100
-      - 200
-      - 300
   - name: configure network interfaces
-    copy: src=files/network_interfaces.j2 dest=/etc/network/interfaces
+    copy: src=files/network_interfaces_openstack.j2 dest=/etc/network/interfaces
+    notify: "restart networking"
+  - name: Copy sample user_config file
+    command: cp openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
+  handlers:
+    name: restart networking
+    service: name=networking state=restarted

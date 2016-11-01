@@ -1,0 +1,11 @@
+auto bond0.100
+iface bond0.100 inet static
+        address 192.168.100.4
+        netmask 255.255.255.0
+        vlan_raw_device bond0
+
+auto bond0.200
+iface bond0.200 inet static
+        address 10.0.1.4
+        netmask 255.255.255.0
+        vlan_raw_device bond0

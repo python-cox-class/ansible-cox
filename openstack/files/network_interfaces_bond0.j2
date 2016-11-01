@@ -1,0 +1,6 @@
+auto bond0
+iface bond0 inet dhcp
+    bridge-ifaces enp0s3
+    bridge-ports enp0s3
+    up ifconfig enp0s3 up
+

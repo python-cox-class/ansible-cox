@@ -1,10 +1,3 @@
-- hosts: all
-  remote_user: python
-  become: yes
-  tasks:
-  # Let the sudo group use sudo without a password
-  - lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"
-
 # Set up the 'stack' user
 - hosts: all
   remote_user: python

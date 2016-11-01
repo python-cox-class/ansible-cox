@@ -3,7 +3,6 @@ ansible==2.1.2.0
 appnope==0.1.0
 backports-abc==0.4
 backports.shutil-get-terminal-size==1.0.0
--e git+git@github.com:rick446/barin.git@3e6dd85496852aeb8e54c50520f681bd80b5985c#egg=barin
 certifi==2016.8.31
 cffi==1.8.3
 click==6.6
@@ -35,7 +34,6 @@ lxml==3.6.4
 MarkupSafe==0.23
 matplotlib==1.5.3
 mistune==0.7.3
-MySQL-python==1.2.5
 nbconvert==4.2.0
 nbformat==4.1.0
 ncclient==0.5.2

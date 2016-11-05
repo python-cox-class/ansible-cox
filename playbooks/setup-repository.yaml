@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+  - name: Create a welcoming file
+    template: src=../welcome_me.j2 dest=~/welcoming-file.txt
+    vars:
+      name: {{remote_user}}

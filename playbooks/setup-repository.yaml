@@ -3,4 +3,13 @@
   - name: Create a welcoming file
     template: src=../welcome_me.j2 dest=~/welcoming-file.txt
     vars:
-      name: {{remote_user}}
+      name: "{{ansible_ssh_user}}"
+  - name: Clone python-cox-class repository
+    git:
+      repo: https://github.com/python-cox-class/ansible-cox.git
+      dest: ~/ansible-cox
+      accept_hostkey: on
+  - name: Install pip and the given requirements file
+    pip: virtualenv=~/env requirements=~/ansible-cox/requirements.txt
+  - name: Activate virtualenv on login
+    lineinfile: line="source ~/env/bin/activate" dest=~/.bashrc

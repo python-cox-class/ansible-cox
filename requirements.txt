@@ -23,7 +23,6 @@ ipywidgets==5.2.2
 itsdangerous==0.24
 Jinja2==2.8
 jsonschema==2.5.1
-junos-eznc==2.0.1
 jupyter==1.0.0
 jupyter-client==4.4.0
 jupyter-console==5.0.0
@@ -34,7 +33,6 @@ matplotlib==1.5.3
 mistune==0.7.3
 nbconvert==4.2.0
 nbformat==4.1.0
-ncclient==0.5.2
 netaddr==0.7.18
 notebook==4.2.2
 numpy==1.11.1
@@ -56,7 +54,6 @@ PyYAML==3.12
 pyzmq==15.4.0
 qtconsole==4.2.1
 requests==2.11.1
-scp==0.10.2
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0

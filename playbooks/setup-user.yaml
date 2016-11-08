@@ -1,7 +1,12 @@
 - hosts: all
   remote_user: root
-  vars:
-    username: YOU-NEED-TO-OVERRIDE-THIS
+  vars_prompt:
+    - name: username
+      prompt: What is your username
+    - name: password
+      prompt: What password
+#  vars:
+#    username: YOU-NEED-TO-OVERRIDE-THIS
   tasks:
   - name: Let the sudo group use sudo without a password
     lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"

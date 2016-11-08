@@ -1,6 +1,7 @@
 - name: First play
   hosts: all
-  remote_user: root
+  # remote_user: root
+  become: on
   tasks:
   - name: Say my name
     command: whoami
@@ -10,6 +11,13 @@
     notify: "demo notify"
   - name: Ping just for fun
     ping: {}
+  - name: Echo some stuff
+    command: 'echo some stuff'
+    register: echo_result
+  - name: Print some output
+    debug: msg='Echo returned {{echo_result.stdout}}'
+  - name: Print some (more) output
+    debug: var=echo_result
   handlers:
   - name: demo notify
     command: 'echo Running the demo notify'

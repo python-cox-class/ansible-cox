@@ -8,7 +8,6 @@
     git:
       repo: https://github.com/python-cox-class/ansible-cox.git
       dest: ~/ansible-cox
-      accept_hostkey: on
   - name: Install pip and the given requirements file
     pip: virtualenv=~/env requirements=~/ansible-cox/requirements.txt
   - name: Activate virtualenv on login

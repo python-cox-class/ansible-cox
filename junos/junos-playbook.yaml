@@ -1,0 +1,13 @@
+- hosts: all
+  connection: local
+  vars:
+    username: root
+    password: Password
+    host: 192.168.99.51
+    port: 22
+    ansible_python_interpreter: /Users/rick446/src/Python-Classes/cox/env/bin/python
+  tasks:
+  - name: Gather some JunOS facts
+    junos_facts: "username={{username}} password={{password}} host={{host}} port={{port}}"
+  - name: Print a message
+    debug: "msg='The version is {{version_info}}o'"

@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: Ensure file exists
+      file: path=~/roster.txt state=touch
+    - name: Include rick
+      include: tasks/roster-user.yaml name="Rick Copeland" email="rick@techtalentsouth.com" regexp=rick
+    - name: Include scott
+      include: tasks/roster-user.yaml name="Scott Robinson" email="rick+scott@techtalentsouth.com" regexp=scott

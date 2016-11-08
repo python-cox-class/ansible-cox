@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *_id_rsa
 *.retry
+roles/*
 
 # C extensions
 *.so

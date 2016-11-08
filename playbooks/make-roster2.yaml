@@ -1,0 +1,16 @@
+---
+- hosts: all
+  vars:
+    users:
+        - name: Rick Copeland
+          email: rick@techtalentsouth.com
+          regexp: rick
+        - name: Scott Robinson
+          email: rick+scott@techtalentsouth.com # Let's not expose scott's email to the world
+          regexp: scott
+  tasks:
+    - name: Ensure file exists
+      file: path=~/roster.txt state=touch
+    - name: Perform some dynamic includes
+      include: "tasks/roster-user.yaml name={{item.name}} email={{item.email}} regexp={{item.regexp}}"
+      with_items: '{{users}}'

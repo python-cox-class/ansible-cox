@@ -8,3 +8,5 @@ ansible_default_ipv4:
 {% for k, v in ansible_default_ipv4.items() %}
     {{ k }}: {{ v }}
 {% endfor %}
+
+{{ansible_default_ipv4}}

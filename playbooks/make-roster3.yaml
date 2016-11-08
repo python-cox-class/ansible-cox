@@ -4,10 +4,14 @@
     users:
         - name: Rick Copeland
           email: rick@techtalentsouth.com
-          regexp: rick
+          regexp: rick@
         - name: Scott Robinson
           email: rick+scott@techtalentsouth.com # Let's not expose scott's email to the world
-          regexp: scott
+          regexp: rick\+scott
+        - name: Chris Ellefsen
+          email: rick+chris@techtalentsouth.com # Let's not expose chris's email to the world
+          regexp: rick\+chris
+
   tasks:
     - name: Ensure file exists
       file: path=~/roster.txt state=touch

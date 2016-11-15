@@ -1,0 +1,7 @@
+- hosts: all
+  connection: local
+  tasks:
+  - name: Decrypt the stack key
+    include_vars: stack-key.yaml
+  - name: Save the stack key
+    copy: dest=stack_id_rsa content={{stack_id_rsa}} mode=600

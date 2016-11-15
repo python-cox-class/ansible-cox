@@ -5,6 +5,7 @@ __pycache__/
 *_id_rsa
 *.retry
 roles/*
+.vault_pass.txt
 
 # C extensions
 *.so

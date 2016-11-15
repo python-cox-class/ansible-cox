@@ -1,0 +1,8 @@
+- hosts: all
+  gather_facts: off
+  become: on
+  tasks:
+  - name: Boostrap Ansible requirements
+    raw: apt-get install -y python2.7 python2.7-dev
+  - name: Create python symlink
+    raw: ln -s /usr/bin/python2.7 /usr/bin/python || true

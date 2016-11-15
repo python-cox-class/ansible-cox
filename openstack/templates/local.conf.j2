@@ -1,0 +1,39 @@
+[[local|localrc]]
+ADMIN_PASSWORD={{admin_password}}
+MYSQL_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+SERVICE_TOKEN=$ADMIN_PASSWORD
+
+# Enable Swift
+enable_service s-proxy s-object s-container s-account
+
+SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5
+SWIFT_REPLICAS=1
+SWIFT_DATA_DIR=$DEST/data
+
+# Force checkout prerequisites
+# FORCE_PREREQ=1
+
+# keystone is now configured by default to use PKI as the token format
+# which produces huge tokens.
+# set UUID as keystone token format which is much shorter and easier to
+# work with.
+KEYSTONE_TOKEN_FORMAT=UUID
+
+# Change the FLOATING_RANGE to whatever IPs VM is working in.
+# In NAT mode it is the subnet VMware Fusion provides, in bridged mode
+# it is your local network. But only use the top end of the network by
+# using a /27 and starting at the 224 octet.
+FLOATING_RANGE=192.168.55.224/27
+
+# Enable logging
+SCREEN_LOGDIR=$DEST/logs/screen
+
+# Set ``OFFLINE`` to ``True`` to configure ``stack.sh`` to run cleanly
+# without Internet access. ``stack.sh`` must have been previously run
+# with Internet access to install prerequisites and fetch repositories.
+# OFFLINE=True
+
+# Enable sahara
+enable_plugin sahara git://git.openstack.org/openstack/sahara

@@ -1,1 +1,2 @@
-stack ansible_host=127.0.0.1 ansible_port=5555
+# cox-openstack ansible_host=104.131.92.109
+cox-stack ansible_host=159.203.94.195

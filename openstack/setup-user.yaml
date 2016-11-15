@@ -1,10 +1,17 @@
 - hosts: all
+  gather_facts: off
+  remote_user: root
+  tasks:
+  - name: Boostrap Ansible requirements
+    raw: apt-get install -y python2.7 python2.7-dev
+  - name: Create python symlink
+    raw: ln -s /usr/bin/python2.7 /usr/bin/python || true
+
+- hosts: all
   remote_user: root
   vars_prompt:
     - name: username
       prompt: What is your username
-#  vars:
-#    username: YOU-NEED-TO-OVERRIDE-THIS
   tasks:
   - name: Let the sudo group use sudo without a password
     lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL'"
@@ -20,4 +27,4 @@
       src: /home/{{username}}/.ssh/id_rsa.pub
       dest: /home/{{username}}/.ssh/authorized_keys
   - name: Retrieve newly-created ssh (private) key
-    fetch: dest=../{{username}}_id_rsa src=/home/{{username}}/.ssh/id_rsa flat=yes
+    fetch: dest={{username}}_id_rsa src=/home/{{username}}/.ssh/id_rsa flat=yes

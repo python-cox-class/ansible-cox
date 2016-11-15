@@ -1,12 +1,23 @@
 - hosts: all
-  remote_user: stack
-  become: yes
+  vars_prompt:
+    - name: admin_password
+      prompt: Openstack admin password?
   tasks:
-  - name: configure network interfaces
-    copy: src=files/network_interfaces_openstack.j2 dest=/etc/network/interfaces
-    notify: "restart networking"
-  - name: Copy sample user_config file
-    command: cp openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
-  handlers:
-    name: restart networking
-    service: name=networking state=restarted
+  - name: Get DevStack repository
+    git:
+      repo: https://git.openstack.org/openstack-dev/devstack.git
+      dest: ~/devstack
+
+  - name: Create local.conf
+    template: src=templates/local.conf.j2 dest=~/devstack/local.conf
+
+  - name: Get ubuntu image
+    uri:
+      url: http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+      dest: ./xenial-server-cloudimg-amd64-disk1.img
+
+#  - name: Run bootstrap
+#    command: ./stack.sh chdir=~/devstack
+#
+#  - name: Upload ubuntu image
+#    command: openstack image create ubuntu-xenial-server-cloudimg-amd64 --file ~/xenial-server-cloudimg-amd64-disk1.img  --disk-format qcow2
